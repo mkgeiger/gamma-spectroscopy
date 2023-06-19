@@ -59,4 +59,8 @@ The following picture shows the complete schematic including the preamplifier, t
 
 This circuit operates with 1/2 [TI OPA2354](/Datasheets/OP2354.pdf) in non-inverting mode. The gain can be configured with a trimmer `R2` in the range 1x - 14x, depending on which range of the gamma spectrum you are interested in. If you want the see the overall gamma spectrum created by this SiPM module (up to 8 MeV) then you would choose a gain factor of 1x. If you want to see the interesting low energy part of the gamma spectrum then you would choose some center position of the trimmer `R2`. The original pulse comming from the SiPM module can be measured at pin `MP_SIPM`. The amplitude of this pulse is equivalent to the energy [keV, MeV] of the gamma photon which caused this pulse. A screenshot taken with the oscilloscope can be seen in the following picture.
 
-<img src="/Osci/osci01.png" alt="" height="300" title="Pulse from the SiPM module">
+<img src="/Osci/osci01.png" alt="" height="400" title="Pulse from the SiPM module">
+
+The amplified pulse is coupled out at pin `MP_AMP`. The following oscilloscope screenshot shows these pulses as an overlayed picture when having captured the different pulse amplitudes (gamma energies).
+
+<img src="/Osci/osci02.png" alt="" height="400" title="Overlayed pulses after the preamplifier">
