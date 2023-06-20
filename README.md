@@ -57,10 +57,25 @@ The following picture shows the complete schematic including the preamplifier, t
 
 ### Preamplifier
 
-This circuit operates with 1/2 [TI OPA2354](/Datasheets/OP2354.pdf) in non-inverting mode. The gain can be configured with a trimmer `R2` in the range 1x - 14x, depending on which range of the gamma spectrum you are interested in. If you want the see the overall gamma spectrum created by this SiPM module (up to 8 MeV) then you would choose a gain factor of 1x. If you want to see the interesting low energy part of the gamma spectrum then you would choose some center position of the trimmer `R2`. The original pulse comming from the SiPM module can be measured at pin `MP_SIPM`. The amplitude of this pulse is equivalent to the energy [keV, MeV] of the gamma photon which caused this pulse. A screenshot taken with the oscilloscope can be seen in the following picture.
+This circuit operates with 1/2 [TI OPA2354](/Datasheets/OP2354.pdf) in non-inverting amplifying mode. The gain can be configured with a trimmer `R2` in the range 1x - 14x, depending on which range of the gamma spectrum you are interested in. If you want the see the overall gamma spectrum created by this SiPM module (up to 8 MeV) then you would choose a gain factor of 1x. If you want to see the interesting low energy part of the gamma spectrum then you would choose some center position of the trimmer `R2`. The original pulse comming from the SiPM module can be measured at pin `MP_SIPM`. The amplitude of this pulse is equivalent to the energy [keV, MeV] of the gamma photon which caused this pulse. A screenshot taken with the oscilloscope can be seen in the following picture.
 
 <img src="/Osci/osci01.png" alt="" height="400" title="Pulse from the SiPM module">
 
-The amplified pulse is coupled out at pin `MP_AMP`. The following oscilloscope screenshot shows these pulses as an overlayed picture when having captured the different pulse amplitudes (gamma energies).
+The amplified pulse is coupled out at pin `MP_AMP` and fead into the peak detection circuit. The following oscilloscope screenshot shows these pulses as an overlayed picture when having captured the different pulse amplitudes (gamma energies).
 
 <img src="/Osci/osci02.png" alt="" height="400" title="Overlayed pulses after the preamplifier">
+
+### Peak Detector (Sample & Hold)
+
+This circuit implements an improved and performant peak detection circuit with one [TI OPA2354](/Datasheets/OP2354.pdf), two Schottky diodes [NXP PMEG4010BEA](/Datasheets/PMEG4010BEA_ENG_TDS.pdf) and one N-channel enhancement mode FET [Onsemi 2N7002](/Datasheets/NDS7002A-D.pdf).
+
+It is used to buffer the source of the signal (`MP_AMP`) into the capacitor `C2`. As we can see the circuit is comprised of 2 OPAMPS. A high impedance load is offered by the OPAMP `U1B` to the source. While OPAMP `U2A` performs buffering action in between the load and capacitor `C2`. The voltage at the output side is the similar as the peak of the input signal stored in the capacitor `C2`. Its working is such that, as the input voltage becomes higher than the charge stored on the capacitor `C2`, it charges itself with the new higher value of input signal through the peak detection diode `D2`. However, for a smaller value of the input, the capacitor `C2` sticks to the previous higher value and the peak detection diode `D2` gets reverse biased.
+
+The final piece of the circuit is `R5` and `D1`, which bootstrap the peak detection diode `D2`. Under that condition during the hold period, there can be no leakage through the diode `D2` resulting in a stable voltage at `D2`.
+
+The charge of capacitor `C2` can be resetted/cleared after the hold period actively by the microcontroller at pin `RST`. This is done by discharging `C2` over the conducting FET and `R4`.
+
+The buffered peak signal is coupled out at pin `SIG` and fead into the ADC- and pulse dicriminator circuit. The following oscilloscope screenshot shows the buffered peak signal.
+
+<img src="/Osci/osci03.png" alt="" height="400" title="Buffered peak signal">
+
