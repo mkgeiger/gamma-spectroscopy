@@ -75,7 +75,12 @@ The final piece of the circuit is `R5` and `D1`, which bootstrap the peak detect
 
 The charge of capacitor `C2` can be resetted/cleared after the hold period actively by the microcontroller at pin `RST`. This is done by discharging `C2` over the conducting FET and `R4`.
 
-The buffered peak signal is coupled out at pin `SIG` and fead into the ADC- and pulse dicriminator circuit. The following oscilloscope screenshot shows the buffered peak signal.
+The buffered peak signal is coupled out at pin `SIG` and fead into the ADC- and pulse discriminator circuit. The following oscilloscope screenshot shows the buffered peak signal.
 
 <img src="/Osci/osci03.png" alt="" height="400" title="Buffered peak signal">
 
+### Pulse Diskriminator
+
+This circuit is responsible for setting the trigger level for the microcontroller peak-interrupt. The circuit operates with 1/2 [TI OPA2354](/Datasheets/OP2354.pdf) in non-inverting comparator mode. The trigger level can be configured with a trimmer `R7` in the range ~0.07V - 0.63V. If the voltage of the source signal (`SIG`) is higher than the trigger level the output signal `INT` is set to 'High' (3.3V) as long the voltage of the source signal (`SIG`) doesn't go below the trigger level. Otherwise `INT` is set to 'Low' (0V). This means that during the peak sampling time no other peak-interrupt can be served by the microcontroller. The trigger level must be carefully adjusted to a minimum trigger level to also capture all small energies (peaks) but not too small to also capture noise (false peaks).
+
+The interrupt signal is coupled out at pin `INT` and fead into the microcontroller.
