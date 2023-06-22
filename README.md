@@ -90,3 +90,18 @@ The interrupt signal is coupled out at pin `INT` and fead into the microcontroll
 The internal ADCs of many microcontrollers and as well for the ESP32 microcontroller have some pretty severe [Differencial Nonlinearity (DNL)](https://pico-adc.markomo.me/INL-DNL/#dnl) issues that result in some channels being much more sensitive (wider input range) than the rest.
 
 That was the reason to use the external 12-bit ADC chip [Microchip MCP3201-B](/Datasheets/MCP3201.pdf) with SPI interface, which has a DNL and INL of only a maximum of +-1 LSB. The 12-bit resolution allows a maximum of 4092 energy channels, which is pretty good. The sampling rate of the ADC is about at 50 kHz which means one peak will be sampled in round about 20 µs, which is not very fast, but enough for this project. The 12-bit sample will be read out over SPI by the microcontroller.
+
+### Microcontroller
+
+I decided to take a NodeMCU ESP32 microcontroller board because of its performant cores, easy programming with Arduino IDE in C/C++, WIFI, small form factor, cheap price and a lot of experience from other projects. Following GPIOs are used:
+
+  Signal      | ESP32  | Mode
+  ------------|--------|----------------
+  LED         | GPIO2  | GPIO output
+  VSPI_CS0    | GPIO5  | SPI chip select
+  VSPI_CLK    | GPIO18 | SPI clock
+  VSPI_MISO   | GPIO19 | SPI data input
+  RST         | GPIO21 | GPIO output
+  INT         | GPIO22 | GPIO IRQ input
+  
+This module can be obtained at Ebay for about 5€. ![ESP32 NodeMCU](/Datasheets/ESP32S_pinout.jpg)
