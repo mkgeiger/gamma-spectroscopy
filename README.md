@@ -105,3 +105,14 @@ I decided to take a NodeMCU ESP32 microcontroller board because of its performan
   INT         | GPIO22 | GPIO IRQ input
   
 This module can be obtained at Ebay for about 5€. ![ESP32 NodeMCU](/Datasheets/ESP32S_pinout.jpg)
+
+## Software
+### Libraries
+
+Following libraries are used by this project:
+* [Arduino library for the MCP320x ADC family](https://github.com/labfruits/mcp320x/), a copy of the driver source code comes along with this project
+* [WiFiManager](https://github.com/tzapu/WiFiManager)
+* [ESPmDNS](https://github.com/espressif/arduino-esp32/tree/master/libraries/ESPmDNS)
+* [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
+* [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
+* [Arduino Time Library](https://github.com/PaulStoffregen/Time)
