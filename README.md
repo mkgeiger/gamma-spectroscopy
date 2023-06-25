@@ -116,3 +116,16 @@ Following libraries are used by this project:
 * [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
 * [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
 * [Arduino Time Library](https://github.com/PaulStoffregen/Time)
+
+### Reset of Wifi Manager settings
+
+To reset the Wifi settings (SSID, password) the code line `wm.resetSettings();` needs to be uncommented for one startup. Afterwards the line needs to be commented again and the device starts in Access Point mode (SSID = GammaConnectAP, IP = 192.168.4.1) showing the WifiManager frontendto the user. The new Wifi settings can then be entered.
+
+### Initialization
+
+The MCP320x driver is initialized for the MCP3201 variant with 800 kHz SPI clock because the chip is only powered with 3.3 Volt. Additional configurations for the MCP3201 driver is a reference voltage of 3.3 Volt, the usage of a chip select pin and MSB first transmission. The ISR pin is configured as input triggering the interrupt handler function `handleInterrupt()` on the rising edge.
+
+At the end of initialization the asynchronous webserver is started (which provides the webpages below to the user) and the Multicast DNS protocol allows to connect to the device always with the same hostname with ending `.local` without using the IP address, e.g.:
+* http://gamma.local/clear - reset and clear the actual measurement
+* http://gamma.local/json - show the measured data in json format which can be downloaded for offline processing and showing
+* http://gamma.local/spectrum - show the measured data graphically as a gamma spectrum
