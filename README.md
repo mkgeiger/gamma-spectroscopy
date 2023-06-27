@@ -107,6 +107,8 @@ I decided to take a NodeMCU ESP32 microcontroller board because of its performan
 This module can be obtained at Ebay for about 5€. ![ESP32 NodeMCU](/Datasheets/ESP32S_pinout.jpg)
 
 ## Software
+The Software can be found [here](/GammaSpectroMeter).
+
 ### Libraries
 
 Following libraries are used by this project:
@@ -129,3 +131,8 @@ At the end of initialization the asynchronous webserver is started (which provid
 * http://gamma.local/clear - reset and clear the actual measurement
 * http://gamma.local/json - show the measured data in json format which can be downloaded for offline processing and showing
 * http://gamma.local/spectrum - show the measured data graphically as a gamma spectrum
+
+### Interrupt
+
+The interrupt caused by gamma pulses is handled in function `handleInterrupt()`. At the beginning of the function at least 3 µs need to be waited until the output signal `SIG` has stabilized and reached its maximum peak. After that this maximum peak is sampled by triggering an ADC conversion. The ADC conversion takes about 20 µs after which the ADC value is read out and the channel corresponding to the sampled ADC value is increased by 1. Each sampled peak - depending on its individual height - will increase one of the 4096 channels. After more and more time the array of channels, which is in fact an array of gamma energies, represents finally a (non callibrated) gamma spectrum. At the end of the function (after the ADC conversion) the peak detection circuit is reset by asserting the signal `RST` for at least 1 µs.
+
