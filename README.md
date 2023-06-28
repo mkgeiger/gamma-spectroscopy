@@ -136,3 +136,8 @@ At the end of initialization the asynchronous webserver is started (which provid
 
 The interrupt caused by gamma pulses is handled in function `handleInterrupt()`. At the beginning of the function at least 3 µs need to be waited until the output signal `SIG` has stabilized and reached its maximum peak. After that this maximum peak is sampled by triggering an ADC conversion. The ADC conversion takes about 20 µs after which the ADC value is read out and the channel corresponding to the sampled ADC value is increased by 1. Each sampled peak - depending on its individual height - will increase one of the 4096 channels. After more and more time the array of channels, which is in fact an array of gamma energies, represents finally a (non callibrated) gamma spectrum. At the end of the function (after the ADC conversion) the peak detection circuit is reset by asserting the signal `RST` for at least 1 µs.
 
+### Data Export
+
+The webserver provides all 4096 channel counters as a JSON formatted stream. This webpage can be displayed in any webbrowser by typing http://gamma.local/json. The displayed JSON stream can be downloaded as a JSON file for further offline processing (e.g. with the Python script). The JSON file contains in the header beside the 4096 channel counters also the elapsed time of the current measurement, the total number of events (peaks) in the current measurement and the average of counts (peaks) per minute. The following screenshot shows an example:
+
+<img src="/Screenshots/screenshot01.png" alt="" width="1000" title="JSON stream">
