@@ -158,3 +158,16 @@ The exported JSON files can be processed offline. For that I have written a smal
 The following screenshot shows a spectrum of Lutetium(III) oxide (LU²O³), which has been under measurement for about 21 hours. The 2 typical gamma peaks of the contained isotope LU-176 can be seen at 202 keV and 307 keV.
 
 <img src="/Screenshots/screenshot03.png" alt="" width="1000" title="Spectrum offline">
+
+Some other examples for gamma specra (JSON files) can be found in folder [Spectra](/Spectra/).
+
+## Photos
+
+The PCB containing the ESP32, the analog circuit with the OPAMPs, the DC-DC step up boost converter for the SiPM bias voltage:
+<img src="/Photos/photo04.jpg" alt="" width="1000" title="Spectrum offline">
+
+The measurement metal box is shielded with 1.25mm thick lead. This reduces the background gamma radiation by about 25% and increases the signal to noise ratio. Only the SiPM detection module is inside the box:
+<img src="/Photos/photo05.jpg" alt="" width="1000" title="Spectrum offline">
+
+The PCB connected to shielded box:
+<img src="/Photos/photo06.jpg" alt="" width="1000" title="Spectrum offline">
